@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Player2WithoutSword
+  m_Controller: {fileID: 9100000, guid: e0b588760e1c07340bcc6e05ad2664cc, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 18ba31f3498c1cd45a6bbd96c7dc3da0, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8055cebb665d23241842fc42df20af1e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: be7fb431594c4f04facf6fc3a06359b9, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8055cebb665d23241842fc42df20af1e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: f17a694cde806ea44b855b1c450ecd5d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a7a18750edb175947b2e442985fc8dce, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: bf7bb2e276ede0348bf8e35c8e412f29, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: a7a18750edb175947b2e442985fc8dce, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 350ff0a56f38cb34aacc63e151a242d7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 17e1fff663f89d442937166fa46ef667, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: eb064cf3aadee5948ba4c38b689a0817, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8a4789d6f96fe6e48b6efe0fa4e081f5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 25ad71323d278b140b460eb247df3c5f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 17e1fff663f89d442937166fa46ef667, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 9ec8c58311d69a44f87ba4e3fccc9e3d, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8a4789d6f96fe6e48b6efe0fa4e081f5, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ac75e2fa0263cc04482a0e2dc3f1d83e, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6941cc4eb959a7b42bbd57153199121c, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ef96cdc554b1cb148883c2a2b64c3e5c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 5bbcb85de08c86340958f2f977b810ee, type: 2}
