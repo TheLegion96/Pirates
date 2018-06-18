@@ -119,13 +119,13 @@ namespace Completed
             //If it's not the player's turn, exit the function.
             if (!GameManager.instance.playersTurn) return;
 
-            if (GameManager.instance.state == GameManager.State.Play && isStillAlive &&
+            if (GameManager.instance.state == GameManager.State.Play && isStillAlive && (
                 Input.GetKeyDown(KeyCode.UpArrow) ||
                 Input.GetKeyDown(KeyCode.DownArrow) ||
                 Input.GetKeyDown(KeyCode.LeftArrow) ||
                 Input.GetKeyDown(KeyCode.RightArrow) ||
                 Input.GetKeyDown(turnJumper)
-                )
+                ))
             {
                 if (Input.GetKeyDown(turnJumper))
                 {
@@ -315,7 +315,7 @@ namespace Completed
                         animator.SetTrigger("Attack");
 
                         //Call the DamageWall function of the Wall we are hitting.
-                       // hitEnemy.DamageEnemy(attackDamage);
+                        hitEnemy.DamageEnemy(attackDamage);
 
                         //Remove the sword.
                         RemoveSword();

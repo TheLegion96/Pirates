@@ -1,273 +1,208 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 
 namespace NeoCompleted
 {
-    public class NeoEnemy : MonoBehaviour
+    public class NeoEnemy : SerializedMonoBehaviour
     {
-        public  BoxCollider2D boxColliderEnemy;
-        protected Animator animator;
-
-        public BoxCollider2D boxCollider;
-        public Rigidbody2D rb2D;
-        // Enumeratori
-        public enum EnemyType
+        public enum ENEMY_TYPE
         {
-            Horizontal,     // 0 Movimento A => B su Asse X
-            Vertical,       // 1 Movimento A => B su Asse Y
-            Ranged,         // 2 Movimento Auto Rotativo Nemico Ranged
-
-            CustomPatrol    // 4 Movimento custom definito da Unity
-        };
-
-        [Header("Enemy properties")]
-        public EnemyType enemyTipe;                         // Indica il tipo di nemico
-        public int hp = 1;                                  //hit points for the enemy.
-        public Vector2 start;
-        public Vector2 end;
-
-        [Header("Horizontal/Vertical only")]
-        private float step = 1f;
-        public float pA;
-        public float pB;
-        public bool wayOfMovement;
-
-        [Header("Ranged only")]
-        public int maxTicks;
-     //   public LineOfSight EnemyAimingWay;
-        public int tick;
-
-        protected List<Transform> _DeadZone = new List<Transform>();
-        protected List<Transform> _LaserDeadZone = new List<Transform>();
-
-        //Patrolling
-        [Header("Patrolling only")]
-        public Transform[] patrolPoints;
-        protected int patrolIndex;
-
-        //Cose...
-    //    Player hitPlayer;
-
-        // Use this for initialization
-        void Start()
-        {
-            boxColliderEnemy = GetComponent<BoxCollider2D>();
-            //Register this enemy with our instance of GameManager by adding it to a list of Enemy objects. 
-            //This allows the GameManager to issue movement commands.
-           
-
-            //Get and store a reference to the attached Animator component.
-            animator = GetComponent<Animator>();
-
-            if (enemyTipe == EnemyType.Horizontal)
-            {
-
-                pA = this.transform.position.x + 3f;
-                pB = this.transform.position.x - 3f;
-            }
-            else if (enemyTipe == EnemyType.Vertical)
-            {
-                pA = this.transform.position.y + 3f;
-                pB = this.transform.position.y - 3f;
-
-            }
-            //Call the start function of our base class MovingObject.
-            //Get a component reference to this object's BoxCollider2D
-            boxCollider = GetComponent<BoxCollider2D>();
-
-            //Get a component reference to this object's Rigidbody2D
-            rb2D = GetComponent<Rigidbody2D>();
-
-          
-
-            //Inizializziamo l'animator.
-         //   _animator = GetComponent<Animator>();
-            //if (enemyTipe == EnemyType.Ranged)
-            //{
-            //    ChangeSightAnimation(EnemyAimingWay);
-            //}
-            NeoGameManager.instance.AddEnemyToList(this);
+            Melee_Horizontal,
+            Melee_Vertical,
+            Melee_Clockwork,
+            Ranged
         }
+        public enum LineOfSight { up, left, down, right }
 
-        // Update is called once per frame
-        void Update()
+        protected LineOfSight Sight;
+
+        public ENEMY_TYPE Enemy_Type;
+
+        [SerializeField] private GameObject Deadzone;
+
+        [EnableIf("isHorizontal")]
+        [EnableIf("isVertical")]
+        [SerializeField] public Vector2 startPos;
+
+        [EnableIf("isHorizontal")]
+        [EnableIf("isVertical")]
+        [SerializeField] public Vector2 finalPos;
+
+       
+
+        public bool DeadZoneONorOFF = true;
+
+        protected Animator _animator;
+
+
+        private void Awake()
         {
 
         }
+        private void Start()
+        {
+            _animator = GetComponent<Animator>();
 
+        }
 
+        private void Update()
+        {
+            
+        }
 
-        //MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
         public void MoveEnemy()
         {
-
-            //Declare variables for X and Y axis move directions, these range from -1 to 1.
-            //These values allow us to choose between the cardinal directions: up, down, left and right.
-            int xDir = 0;
-            int yDir = 0;
-
-            CheckNextCell(out xDir, out yDir);
-
-            //AttemptMove<Player>(xDir, yDir);
-        }
-        public virtual void CheckNextCell(out int xDir, out int yDir)
-        {
-            xDir = 0;
-            yDir = 0;
-
-            //  Vector3 _tempEnd = new Vector3();
-            Vector2 newPos;
-
-
-            switch (enemyTipe)
+            switch(Enemy_Type)
             {
-                case EnemyType.CustomPatrol: //Patrol defined by level designers.
+                case ENEMY_TYPE.Melee_Clockwork:
 
-                    if (transform.position == patrolPoints[patrolIndex].position)
-                    {
-                        patrolIndex++;
-                    }
-                    if (patrolIndex >= patrolPoints.Length)
-                    {
-                        patrolIndex = 0;
-                    }
-
-                    xDir = (int)(patrolPoints[patrolIndex].position.x - transform.position.x);
-                    yDir = (int)(patrolPoints[patrolIndex].position.y - transform.position.y);
                     break;
+                case ENEMY_TYPE.Melee_Horizontal:
 
-                case EnemyType.Horizontal://Pattern AB_AsseX
-
-                    if (wayOfMovement == true)
-                    {
-                        xDir = (int)step;
-                        newPos = new Vector2(this.transform.position.x + step, this.transform.position.y);
-                    }
-                    else
-                    {
-                        xDir = -(int)step;
-                        newPos = new Vector2(this.transform.position.x - step, this.transform.position.y);
-                    }
-                    if (newPos.x == pA)
-                    {
-                        wayOfMovement = false;
-                    }
-                    if (newPos.x == pB)
-                    {
-                        wayOfMovement = true;
-                    }
                     break;
+                case ENEMY_TYPE.Melee_Vertical:
 
-
-                case EnemyType.Vertical://Pattern AB_AsseY 
-
-                    if (wayOfMovement == true)
-                    {
-                        yDir = (int)step;
-                        newPos = new Vector2(this.transform.position.x, this.transform.position.y + step);
-                    }
-                    else
-                    {
-                        yDir = -(int)step;
-                        newPos = new Vector2(this.transform.position.x, this.transform.position.y - step);
-                    }
-                    if (newPos.y == pA)
-                    {
-                        wayOfMovement = false;
-                    }
-                    if (newPos.y == pB)
-                    {
-                        wayOfMovement = true;
-                    }
                     break;
+                case ENEMY_TYPE.Ranged:
+
+                    break;
+            }
+
+        }
+        public void CheckNextCell()
+        {
+
+        }
+
+        #region NeoEnemyTool
+       [HideInInspector] public bool isHorizontal;
+        [HideInInspector] public bool isVertical;
+        [HideInInspector] public bool isClockwork;
+        [HideInInspector] public bool isRanged;
+
+        [ExecuteInEditMode]
+        private void ChangeUI()
+        {
+            if(Enemy_Type== ENEMY_TYPE.Melee_Horizontal)
+            {
+                isHorizontal = true;
+                isVertical = false;
+                isRanged = false;
+                isClockwork = false;
+            }
+            if (Enemy_Type == ENEMY_TYPE.Melee_Vertical)
+            {
+                isVertical = true;
+                isHorizontal = false;
+                isRanged = false;
+                isClockwork = false;
+            }
+            if (Enemy_Type == ENEMY_TYPE.Melee_Clockwork)
+            {
+                isClockwork = true;
+                isHorizontal = false;
+                isRanged = false;
+                isVertical = false;
+            }
+            if (Enemy_Type == ENEMY_TYPE.Ranged)
+            {
+                isRanged = true;
+                isHorizontal = false;
+                isVertical = false;
+                isClockwork = false;
 
             }
         }
 
-        //public Vector2 GetVectorDirection(LineOfSight aimingDirection)
-        //{
-        //    Vector2 direction = new Vector2();
-
-        //    switch (aimingDirection)
-        //    {
-        //        case LineOfSight.down:
-        //            direction = -transform.up;
-        //            break;
-        //        case LineOfSight.up:
-        //            direction = transform.up;
-        //            break;
-        //        case LineOfSight.right:
-        //            direction = transform.right;
-        //            break;
-        //        case LineOfSight.left:
-        //            direction = -transform.right;
-        //            break;
-        //    }
-
-        //    return direction;
-        //}
-
-        ////MoveEnemy is called by the GameManger each turn to tell each Enemy to try to move towards the player.
-        //public void MoveEnemy()
-        //{
-
-        //    //Declare variables for X and Y axis move directions, these range from -1 to 1.
-        //    //These values allow us to choose between the cardinal directions: up, down, left and right.
-        //    int xDir = 0;
-        //    int yDir = 0;
-
-        //    CheckNextCell(out xDir, out yDir);
-
-        //    AttemptMove<Player>(xDir, yDir);
-        //}
+        #endregion
 
 
 
-        //public static void ChangeAimingDirection(ref LineOfSight posizione)
-        //{
-        //    switch (posizione)
-        //    {
-        //        case LineOfSight.down:
-        //            posizione = LineOfSight.left;
-        //            break;
-        //        case LineOfSight.left:
-        //            posizione = LineOfSight.up;
-        //            break;
-        //        case LineOfSight.up:
-        //            posizione = LineOfSight.right;
-        //            break;
-        //        case LineOfSight.right:
-        //            posizione = LineOfSight.down;
-        //            break;
-        //    }
-        //}
 
-        ////OnCantMove is called if Enemy attempts to move into a space occupied by a Player, it overrides the OnCantMove function of MovingObject
-        ////and takes a generic parameter T which we use to pass in the component we expect to encounter, in this case Player
-        ////Player hitPlayer;
-        //protected override void OnCantMove<T>(T component)
-        //{
-        //    //Declare hitPlayer and set it to equal the encountered component.
-        //    Player hitPlayer = component as Player;
+        //Cambio Lato Animazione Oggetto
+        protected void ChangeSightAnimation(LineOfSight sight)
+        {
+            switch (sight)
+            {
+                case LineOfSight.up:
+                    ChangeSightAnimation(0f, 1f);
+                    break;
 
-        //    //Call the LoseFood function of hitPlayer passing it playerDamage, the amount of foodpoints to be subtracted.
-        //    //	hitPlayer.LoseFood (playerDamage);
+                case LineOfSight.right:
+                    ChangeSightAnimation(1f, 0f);
+                    break;
 
-        //    //Set the attack trigger of animator to trigger Enemy attack animation.
-        //    animator.SetTrigger("Attack");
+                case LineOfSight.down:
+                    ChangeSightAnimation(0f, -1f);
+                    break;
 
-        //    //Stop the background music.
-        //    SoundManager.instance.musicSource.Stop();
+                case LineOfSight.left:
+                    ChangeSightAnimation(-1f, 0f);
+                    break;
+            }
+        }
+        protected void ChangeSightAnimation(float xDir, float yDir)
+        {
+            _animator.SetFloat("x", xDir);
+            _animator.SetFloat("y", yDir);
+        }
+        public void InstanceDeadZone(LineOfSight parEnemyAimingWay)
+        {
 
-        //    //Call the RandomizeSfx function of SoundManager passing in the two audio clips to choose randomly between.
-        //    SoundManager.instance.RandomizeSfx(attackSound1);
+            Vector3 _TempEndPosition = new Vector3();
+            Transform _TempDeadZone = Instantiate(Deadzone.transform, this.transform.position, Quaternion.identity);
+            _TempEndPosition = new Vector3();
+            switch (parEnemyAimingWay)
+            {
+                case LineOfSight.down:
+                    _TempEndPosition = _TempDeadZone.position;
+                    _TempEndPosition.y -= 1;
+                    _TempDeadZone.position = _TempEndPosition;
+                    break;
+                case LineOfSight.left:
+                    _TempEndPosition = _TempDeadZone.position;
+                    _TempEndPosition.x -= 1;
+                    _TempDeadZone.position = _TempEndPosition;
+                    break;
+                case LineOfSight.up:
+                    _TempEndPosition = _TempDeadZone.position;
+                    _TempEndPosition.y += 1;
+                    _TempDeadZone.position = _TempEndPosition;
+                    break;
+                case LineOfSight.right:
+                    _TempEndPosition = _TempDeadZone.position;
+                    _TempEndPosition.x += 1;
+                    _TempDeadZone.position = _TempEndPosition;
+                    break;
+            }
+            RaycastHit2D checkCollision;
+            checkCollision = Physics2D.Linecast(_TempDeadZone.position, _TempDeadZone.position);
+            if (checkCollision.transform != null)
+            {
+                if (checkCollision.transform.tag == "Stone" || checkCollision.transform.tag == "Enemy")
+                {
+                    Destroy(_TempDeadZone.gameObject);
 
-        //    hitPlayer.ExecuteGameOver();
+                }
+                else if (checkCollision.transform.tag == "DeadZone")
+                {
+                    Destroy(_TempDeadZone.gameObject);
+                }
+                else
+                {
+                    _TempDeadZone.GetComponent<BoxCollider2D>().enabled = true;
+                }
+            }
 
-        //}
+            if (_TempDeadZone != null)
+            {
 
+                _TempDeadZone.position = _TempEndPosition;
 
+            }
+        }
     }
 }

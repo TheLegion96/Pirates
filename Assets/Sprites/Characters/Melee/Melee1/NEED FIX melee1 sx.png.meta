@@ -1,0 +1,330 @@
+fileFormatVersion: 2
+guid: 289f541fc59c88a47bbbf3b03fb58e1a
+timeCreated: 1501857359
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: NEED FIX melee1 sx_0
+    21300002: NEED FIX melee1 sx_1
+    21300004: NEED FIX melee1 sx_2
+    21300006: NEED FIX melee1 sx_3
+    21300008: NEED FIX melee1 sx_4
+    21300010: NEED FIX melee1 sx_5
+    21300012: NEED FIX melee1 sx_6
+    21300014: NEED FIX melee1 sx_7
+    21300016: NEED FIX melee1 sx_8
+    21300018: NEED FIX melee1 sx_9
+    21300020: NEED FIX melee1 sx_10
+    21300022: NEED FIX melee1 sx_11
+    21300024: NEED FIX melee1 sx_12
+    21300026: NEED FIX melee1 sx_13
+    21300028: NEED FIX melee1 sx_14
+    21300030: NEED FIX melee1 sx_15
+    21300032: NEED FIX melee1 sx_16
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 3000
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_0
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 12834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_1
+      rect:
+        serializedVersion: 2
+        x: 3150
+        y: 12834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_2
+      rect:
+        serializedVersion: 2
+        x: 6250
+        y: 12834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_3
+      rect:
+        serializedVersion: 2
+        x: 9350
+        y: 12834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_4
+      rect:
+        serializedVersion: 2
+        x: 12450
+        y: 12834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_5
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 9334
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_6
+      rect:
+        serializedVersion: 2
+        x: 3150
+        y: 9334
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_7
+      rect:
+        serializedVersion: 2
+        x: 6250
+        y: 9334
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_8
+      rect:
+        serializedVersion: 2
+        x: 9350
+        y: 9334
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_9
+      rect:
+        serializedVersion: 2
+        x: 12450
+        y: 9334
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_10
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 5834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_11
+      rect:
+        serializedVersion: 2
+        x: 3150
+        y: 5834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_12
+      rect:
+        serializedVersion: 2
+        x: 6250
+        y: 5834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_13
+      rect:
+        serializedVersion: 2
+        x: 9350
+        y: 5834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_14
+      rect:
+        serializedVersion: 2
+        x: 12450
+        y: 5834
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_15
+      rect:
+        serializedVersion: 2
+        x: 50
+        y: 2334
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: NEED FIX melee1 sx_16
+      rect:
+        serializedVersion: 2
+        x: 3150
+        y: 2334
+        width: 3100
+        height: 3500
+      alignment: 9
+      pivot: {x: 0.5, y: 0.443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: M1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

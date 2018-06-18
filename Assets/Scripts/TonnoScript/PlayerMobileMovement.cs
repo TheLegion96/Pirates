@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace NeoCompleted
 {
-    public class PlayerMobileMovement : MonoBehaviour
+    public class PlayerMobileMovement : SerializedMonoBehaviour
     {
 
 

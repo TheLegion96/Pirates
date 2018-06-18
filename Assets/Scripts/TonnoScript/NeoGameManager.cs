@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 using UnityEngine.SceneManagement;
 
 namespace NeoCompleted
 {
-    public class NeoGameManager : MonoBehaviour
+    public class NeoGameManager : SerializedMonoBehaviour
     {
 
         public enum State
@@ -45,11 +46,7 @@ namespace NeoCompleted
             }
             enemies = new List<NeoEnemy>();
         }
-        // Use this for initialization
-        void Start()
-        {
-
-        }
+        
 
         // Update is called once per frame
         void Update()
@@ -87,65 +84,7 @@ namespace NeoCompleted
         //Coroutine to move enemies in sequence.
         IEnumerator MoveEnemies()
         {
-            RangedEnemy tempRangedEnemy;
-            Vector2 tempEnd;
-            Completed.Enemy.LineOfSight tempEnemyAimingWay;
-            int tempTickBeforeChange;
-
-          
-            enemiesMoving = true;
-
-         
-            yield return new WaitForSeconds(turnDelay);
-
-           
-            if (enemies.Count == 0)
-            {            
-                yield return new WaitForSeconds(turnDelay);
-            }
-
-           
-            for (int i = 0; i < enemies.Count; i++)
-            {
-              
-                enemies[i].MoveEnemy();
-
-                yield return new WaitForSeconds(enemies[i].moveTime / 100);
-            }
-            yield return new WaitForSeconds(0.1f);
-
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                tempRangedEnemy = null;
-
-                if (enemies[i] is RangedEnemy)
-                {
-                    tempRangedEnemy = ((RangedEnemy)enemies[i]);
-
-                    tempTickBeforeChange = tempRangedEnemy.maxTicks - 1;
-
-                    if (tempRangedEnemy.tick == tempTickBeforeChange)
-                    {
-                        tempEnemyAimingWay = tempRangedEnemy.EnemyAimingWay;
-
-                        Enemy.ChangeAimingDirection(ref tempEnemyAimingWay);
-                        tempEnd = tempRangedEnemy.GetVectorDirection(tempEnemyAimingWay);
-                        tempRangedEnemy.CheckStoneRaycast(ref tempEnd, ref tempEnemyAimingWay);
-                        tempRangedEnemy.InstanceDeadZone(tempEnemyAimingWay);
-                    }
-                    else
-                    {
-                        tempRangedEnemy.InstanceLaserDeadZone(tempRangedEnemy.EnemyAimingWay);
-                    }
-                   
-                }
-            }
-
-
-            //Once Enemies are done moving, set playersTurn to true so player can move.
-            state = State.Wait;
-            //Enemies are done moving, set enemiesMoving to false.
-            enemiesMoving = false;
+            yield return null;
         }
 
     }
