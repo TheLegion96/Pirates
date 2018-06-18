@@ -50,7 +50,7 @@ namespace NeoCompleted
             }
         }
 
-        public float moveTime = 0.05f;
+        public float moveTime = 0.5f;
         public void GiveMovement(GameObject _direction)
         {
 

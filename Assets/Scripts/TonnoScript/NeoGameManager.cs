@@ -84,6 +84,11 @@ namespace NeoCompleted
         //Coroutine to move enemies in sequence.
         IEnumerator MoveEnemies()
         {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                enemies[i].MoveEnemy();
+                yield return new WaitForSeconds(enemies[i].moveTime / 100);
+            }
             yield return null;
         }
 

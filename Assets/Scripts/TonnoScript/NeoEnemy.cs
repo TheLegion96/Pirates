@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
-
+using DG.Tweening;
+using System;
 
 namespace NeoCompleted
 {
@@ -18,110 +19,141 @@ namespace NeoCompleted
         public enum LineOfSight { up, left, down, right }
 
         protected LineOfSight Sight;
+      public float  moveTime=0.5f;
 
-        public ENEMY_TYPE Enemy_Type;
+        [Header("Type of Enemy")]
+        [Space]
+        [InfoBox("Select the type of enemy you want to create")]
+        [Space]
+        public ENEMY_TYPE EnemyType;
 
-        [SerializeField] private GameObject Deadzone;
-
-        [EnableIf("isHorizontal")]
-        [EnableIf("isVertical")]
+        [Space]
+        [Space]
+        [ShowIf("isLinear")]
+        [InfoBox("Choose the coordinates that the enemy must use as a reference for the  movements. In this case the limit A")]
+        [Space]
         [SerializeField] public Vector2 startPos;
 
-        [EnableIf("isHorizontal")]
-        [EnableIf("isVertical")]
+        [ShowIf("isLinear")]
+        [InfoBox("Choose the coordinates that the enemy must use as a reference for the  movements. In this case the limit B")]
+        [Space]
         [SerializeField] public Vector2 finalPos;
 
-       
+
+        [Space]
+        [Space]
+        [ShowIf("isClockwork")]
+        [InfoBox("Choose the coordinates that the enemy must use as a reference for the movements.In this case the vertices in which it will rotate")]
+        [SerializeField] public Transform[] PatrolPoint;
+        [ShowIf("isClockwork")]
+        [InfoBox("Current patrol point")]
+        public int index;
+
+    
+
+    [SerializeField] private GameObject Deadzone;
 
         public bool DeadZoneONorOFF = true;
 
         protected Animator _animator;
 
 
-        private void Awake()
-        {
-
-        }
+       
         private void Start()
         {
             _animator = GetComponent<Animator>();
+            NeoGameManager.instance.AddEnemyToList(this);
+            if(EnemyType== ENEMY_TYPE.Ranged)
+            {
+                InstanceDeadZone(Sight);
 
+            }
         }
 
         private void Update()
         {
-            
+
         }
 
         public void MoveEnemy()
         {
-            switch(Enemy_Type)
+            switch (EnemyType)
             {
-                case ENEMY_TYPE.Melee_Clockwork:
-
-                    break;
                 case ENEMY_TYPE.Melee_Horizontal:
+                    if (transform.position == (Vector3)startPos|| transform.position == (Vector3)finalPos)
+                    {
+                        //Deve invertire la marcia
+                    }
+                    if (Sight == LineOfSight.left)
+                    {
 
+                        this.gameObject.transform.DOMove(transform.position - transform.right, moveTime);
+                      
+                    }
+                    if (Sight == LineOfSight.right)
+                    {
+                        this.gameObject.transform.DOMove(transform.position + transform.right, moveTime);
+                    }
+                    
                     break;
                 case ENEMY_TYPE.Melee_Vertical:
+                    if (transform.position == (Vector3)startPos || transform.position == (Vector3)finalPos)
+                    {
+                        //Deve invertire la marcia
+                    }
+                    if (Sight == LineOfSight.down)
+                    {
+                        this.gameObject.transform.DOMove(transform.position - transform.up, moveTime);
+                    }
+                    if (Sight == LineOfSight.up)
+                    {
+                        this.gameObject.transform.DOMove(transform.position + transform.up, moveTime);
 
+                    }
+                    break;
+                case ENEMY_TYPE.Melee_Clockwork:
+                    if(index==PatrolPoint.Length)
+                    {
+                        index = 0;
+                    }
+                  
+                    transform.DOMove(PatrolPoint[index].position,moveTime).OnStart(SaveMyOldPosition).OnComplete(CheckForChange);
+                  
+                    index++;
                     break;
                 case ENEMY_TYPE.Ranged:
 
                     break;
+
+
             }
+            NeoGameManager.instance.SetState(NeoGameManager.State.Wait);
 
         }
-        public void CheckNextCell()
+        Vector3 oldPos;
+        private void SaveMyOldPosition()
         {
-
+            oldPos = transform.position;
         }
-
-        #region NeoEnemyTool
-       [HideInInspector] public bool isHorizontal;
-        [HideInInspector] public bool isVertical;
-        [HideInInspector] public bool isClockwork;
-        [HideInInspector] public bool isRanged;
-
-        [ExecuteInEditMode]
-        private void ChangeUI()
+        private void CheckForChange()
         {
-            if(Enemy_Type== ENEMY_TYPE.Melee_Horizontal)
+            if(oldPos.x>transform.position.x)
             {
-                isHorizontal = true;
-                isVertical = false;
-                isRanged = false;
-                isClockwork = false;
+                ChangeSightAnimation(LineOfSight.left);
             }
-            if (Enemy_Type == ENEMY_TYPE.Melee_Vertical)
+            if (oldPos.x < transform.position.x)
             {
-                isVertical = true;
-                isHorizontal = false;
-                isRanged = false;
-                isClockwork = false;
+                ChangeSightAnimation(LineOfSight.right);
             }
-            if (Enemy_Type == ENEMY_TYPE.Melee_Clockwork)
+            if (oldPos.y > transform.position.y)
             {
-                isClockwork = true;
-                isHorizontal = false;
-                isRanged = false;
-                isVertical = false;
+                ChangeSightAnimation(LineOfSight.down);
             }
-            if (Enemy_Type == ENEMY_TYPE.Ranged)
+            if (oldPos.y < transform.position.y)
             {
-                isRanged = true;
-                isHorizontal = false;
-                isVertical = false;
-                isClockwork = false;
-
+                ChangeSightAnimation(LineOfSight.up);
             }
-        }
-
-        #endregion
-
-
-
-
+        }    
         //Cambio Lato Animazione Oggetto
         protected void ChangeSightAnimation(LineOfSight sight)
         {
@@ -204,5 +236,38 @@ namespace NeoCompleted
 
             }
         }
+        #region NeoEnemyTool
+        [HideInInspector] public bool isLinear;
+      
+        [HideInInspector] public bool isClockwork;
+        [HideInInspector] public bool isRanged;
+
+        [ExecuteInEditMode]
+         void OnValidate()
+        {
+            if (EnemyType == ENEMY_TYPE.Melee_Horizontal||EnemyType== ENEMY_TYPE.Melee_Vertical)
+            {
+                isLinear = true;              
+                isRanged = false;
+                isClockwork = false;
+            }
+           
+            if (EnemyType == ENEMY_TYPE.Melee_Clockwork)
+            {
+                isClockwork = true;
+                isLinear = false;
+                isRanged = false;
+               
+            }
+            if (EnemyType == ENEMY_TYPE.Ranged)
+            {
+                isRanged = true;
+                isLinear = false;
+                isClockwork = false;
+
+            }
+        } 
+
+        #endregion
     }
 }

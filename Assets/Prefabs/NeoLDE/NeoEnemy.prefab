@@ -139,11 +139,15 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  Enemy_Type: 0
-  Deadzone: {fileID: 0}
+  EnemyType: 0
   startPos: {x: 0, y: 0}
   finalPos: {x: 0, y: 0}
+  vertex: []
+  Deadzone: {fileID: 0}
   DeadZoneONorOFF: 1
+  isLinear: 1
+  isClockwork: 0
+  isRanged: 0
 --- !u!212 &212454612700617944
 SpriteRenderer:
   m_ObjectHideFlags: 1
