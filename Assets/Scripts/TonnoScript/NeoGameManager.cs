@@ -46,8 +46,14 @@ namespace NeoCompleted
             }
             enemies = new List<NeoEnemy>();
         }
-        
 
+        private void Start()
+        {
+            foreach(NeoEnemy e in enemies)
+            {
+                e.ChangeSightAnimation(e.Sight);
+            }
+        }
         // Update is called once per frame
         void Update()
         {
@@ -65,6 +71,7 @@ namespace NeoCompleted
 
             if (state== State.MoveEnemy)
             {
+                destroyAllLaserAndDeadZone();
                 StartCoroutine(MoveEnemies());
             }
         }
@@ -87,10 +94,29 @@ namespace NeoCompleted
             for (int i = 0; i < enemies.Count; i++)
             {
                 enemies[i].MoveEnemy();
+            
                 yield return new WaitForSeconds(enemies[i].moveTime / 100);
             }
             yield return null;
         }
 
+        void destroyAllLaserAndDeadZone()
+        {
+            GameObject[] DestroyDeadZone;
+            GameObject[] DestroyLaserDeadZone;
+            DestroyDeadZone = GameObject.FindGameObjectsWithTag("DeadZone");
+            DestroyLaserDeadZone = GameObject.FindGameObjectsWithTag("LaserDeadZone");
+            if (DestroyLaserDeadZone.Length > 0 || DestroyDeadZone.Length > 0)
+            {
+                for (int i1 = 0; i1 < DestroyDeadZone.Length; i1++)
+                {
+                    Destroy(DestroyDeadZone[i1].gameObject);
+                }
+                for (int i1 = 0; i1 < DestroyLaserDeadZone.Length; i1++)
+                {
+                    Destroy(DestroyLaserDeadZone[i1].gameObject);
+                }
+            }
+        }
     }
 }
