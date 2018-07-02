@@ -2953,6 +2953,32 @@ Prefab:
       value: 
       objectReference: {fileID: 1849494467361634, guid: d9c450b0b6072a441b23464b9f02c2ff,
         type: 2}
+    - target: {fileID: 114821147938525476, guid: b88f275a85ddffd43b424f1c1415f5d9,
+        type: 2}
+      propertyPath: _ParentDeadZone
+      value: 
+      objectReference: {fileID: 1888794201}
+    - target: {fileID: 114821147938525476, guid: b88f275a85ddffd43b424f1c1415f5d9,
+        type: 2}
+      propertyPath: _ParentLaserDeadZone
+      value: 
+      objectReference: {fileID: 841530064}
+    - target: {fileID: 95884547837723612, guid: b88f275a85ddffd43b424f1c1415f5d9,
+        type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 22100000, guid: 0020398c0773fbd48b80f37ab3801581,
+        type: 2}
+    - target: {fileID: 114821147938525476, guid: b88f275a85ddffd43b424f1c1415f5d9,
+        type: 2}
+      propertyPath: Sight
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114821147938525476, guid: b88f275a85ddffd43b424f1c1415f5d9,
+        type: 2}
+      propertyPath: CountDownMesh
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b88f275a85ddffd43b424f1c1415f5d9, type: 2}
   m_IsPrefabParent: 0
@@ -4686,6 +4712,7 @@ Prefab:
     - {fileID: 114459957416929282, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
     - {fileID: 114781882055282488, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
     - {fileID: 114754763057101848, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
+    - {fileID: 11446652, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1424542394
@@ -5746,7 +5773,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1888794201}
   m_Layer: 0
-  m_Name: LaserDeadZones (1)
+  m_Name: DeadZones
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5759,7 +5786,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1888794200}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: 0.15, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6010,6 +6037,16 @@ Prefab:
       propertyPath: Sight
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 114821147938525476, guid: b88f275a85ddffd43b424f1c1415f5d9,
+        type: 2}
+      propertyPath: _ParentDeadZone
+      value: 
+      objectReference: {fileID: 1888794201}
+    - target: {fileID: 114821147938525476, guid: b88f275a85ddffd43b424f1c1415f5d9,
+        type: 2}
+      propertyPath: _ParentLaserDeadZone
+      value: 
+      objectReference: {fileID: 841530064}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b88f275a85ddffd43b424f1c1415f5d9, type: 2}
   m_IsPrefabParent: 0

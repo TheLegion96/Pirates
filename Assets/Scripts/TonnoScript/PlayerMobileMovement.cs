@@ -57,6 +57,9 @@ namespace NeoCompleted
             switch (_direction.name)
             {
                 case "Player": //Do Pause
+                    DisableButton();
+                    
+                    EnableButton();
                     break;
                 case "Player_MoveUp"://Do Up
                     this.gameObject.transform.DOMove(transform.position + transform.up, moveTime).OnStart(DisableButton).OnComplete(EnableButton);

@@ -96,8 +96,8 @@ namespace NeoCompleted
         #region Metodi Unity : Awake Start Update
         private void Awake()
         {
-            _ParentDeadZone = GameObject.Find("DeadZones").GetComponent<Transform>();
-            _ParentLaserDeadZone = GameObject.Find("LaserDeadZones").GetComponent<Transform>();
+            //_ParentDeadZone = GameObject.Find("DeadZones").GetComponent<Transform>();
+            //_ParentLaserDeadZone = GameObject.Find("LaserDeadZones").GetComponent<Transform>();
             CountDownMesh = GameObject.Find("CountDown").GetComponent<TextMesh>();
         }
 
@@ -166,7 +166,7 @@ namespace NeoCompleted
                         index = 0;
                     }
                   
-                    transform.DOMove(PatrolPoint[index].position,moveTime).OnStart(SaveMyOldPosition).OnUpdate(CheckForChange).OnComplete(IDZ);//Ed esegue il movimento verso il punto successivo eseguendo le seguenti istruzioni nel  mentre:
+                    transform.DOMove(PatrolPoint[index].position,moveTime).OnStart(SaveMyOldPosition)/*.OnUpdate(CheckForChange)*/.OnComplete(IDZ);//Ed esegue il movimento verso il punto successivo eseguendo le seguenti istruzioni nel  mentre:
                     /*
                      * OnStart(SaveMyOldPosition) Memorizza la posizione prima del movimento
                      * OnUpdate(CheckForChange) Controlla se durante il movimento il nemico deve cambiare la mira
@@ -294,7 +294,10 @@ namespace NeoCompleted
 
                 case ENEMY_TYPE.Ranged:   InstanceDeadZone(Sight); InstanceLaserDeadZone(Sight);
                     break;
-                default: InstanceNextDeadZone(Sight); break;
+                default:
+
+                    checkNextDeadZone();
+                    InstanceNextDeadZone(Sight); break;
             }
           
         }
@@ -311,15 +314,15 @@ namespace NeoCompleted
                 ChangeSightAnimation(LineOfSight.left);
                 Sight = LineOfSight.left;
             }
-            if (oldPos.x < transform.position.x)
-            {
-                ChangeSightAnimation(LineOfSight.right);
-                Sight = LineOfSight.right;
-            }
             if (oldPos.y > transform.position.y)
             {
                 ChangeSightAnimation(LineOfSight.down);
                 Sight = LineOfSight.down;
+            }
+            if (oldPos.x < transform.position.x)
+            {
+                ChangeSightAnimation(LineOfSight.right);
+                Sight = LineOfSight.right;
             }
             if (oldPos.y < transform.position.y)
             {
@@ -330,7 +333,30 @@ namespace NeoCompleted
 
          private void checkNextDeadZone()
         {
-
+            //Controllare l'index della cella prossima, controllare la posizione della prossima cella e dopo instanziare la nuova deadzone
+            //in quella cella 
+           
+            if (transform.position.x > PatrolPoint[index].position.x)
+            { 
+                ChangeSightAnimation(LineOfSight.left);  
+                Sight = LineOfSight.left;
+            }
+            if (transform.position.y > PatrolPoint[index].position.y)
+            {
+                ChangeSightAnimation(LineOfSight.down);
+                Sight = LineOfSight.down;
+            }
+            if (transform.position.x < PatrolPoint[index].position.x)
+            {
+                ChangeSightAnimation(LineOfSight.right);
+                Sight = LineOfSight.right;
+            }
+            if (transform.position.y < PatrolPoint[index].position.y)
+            {
+                ChangeSightAnimation(LineOfSight.up);
+                Sight = LineOfSight.up;
+            }
+          
         }
         
         public void ChangeSightAnimation(LineOfSight sight)
