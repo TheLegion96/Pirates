@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Enemy
   - Background
+  - DeadZone
+  - LaserDeadZone
+  - Stone
   layers:
   - Default
   - TransparentFX

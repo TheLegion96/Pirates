@@ -42,12 +42,15 @@ namespace NeoCompleted
         [InfoBox("Choose the coordinates that the enemy must use as a reference for the  movements. In this case the limit A")]
         [Space]
         [SerializeField] public Vector2 startPos;
-
+        [ShowIf("isLinear")]
+        public GameObject PointA;
         [ShowIf("isLinear")]
         [InfoBox("Choose the coordinates that the enemy must use as a reference for the  movements. In this case the limit B")]
         [Space]
         [SerializeField] public Vector2 finalPos;
-
+     
+        [ShowIf("isLinear")]
+        public GameObject PointB;
 
         [Space]
         [Space]
@@ -90,6 +93,8 @@ namespace NeoCompleted
 
 
         Vector3 oldPos;
+
+   
         //------------------------------------------------Fine Variabili------------------------------------------------------------------------------------
         #endregion
 
@@ -125,35 +130,31 @@ namespace NeoCompleted
             {
                 case ENEMY_TYPE.Melee_Horizontal: //Se è orrizzontale
 
-                    if (transform.position == (Vector3)startPos|| transform.position == (Vector3)finalPos)//Controlla che non sia arrivato al capolinea
-                    {
-                        //In tal caso deve invertire la marcia
-                    }
+                    
+                   
                     if (Sight == LineOfSight.left) //Se sta guardando a sinistra
                     {
-                        this.gameObject.transform.DOMove(transform.position - transform.right, moveTime).OnComplete(checkNextDeadZone).OnComplete(IDZ);//Si muove a sinistra e quando ha finito instanzia la nuova DeadZone                  
+                        this.gameObject.transform.DOMove(transform.position - transform.right, moveTime).OnComplete(IDZ);//Si muove a sinistra e quando ha finito instanzia la nuova DeadZone                  
                     }
                     if (Sight == LineOfSight.right) //Se sta guardando a destra
                     {
-                        this.gameObject.transform.DOMove(transform.position + transform.right, moveTime).OnComplete(checkNextDeadZone).OnComplete(IDZ);//Si muove a destra e quando ha finito instanzia la nuova DeadZone 
-                    }                    
+                        this.gameObject.transform.DOMove(transform.position + transform.right, moveTime).OnComplete(IDZ);//Si muove a destra e quando ha finito instanzia la nuova DeadZone 
+                    }
+                
                     break;
 
                     
                 case ENEMY_TYPE.Melee_Vertical://Se è Verticale
+
                     
-                    if (transform.position == (Vector3)startPos || transform.position == (Vector3)finalPos)//Controlla che non sia arrivato al capolinea
-                    {
-                        //In tal caso deve invertire la marcia
-                    }
                     if (Sight == LineOfSight.down) //Se sta guardando giù
                     {
-                        this.gameObject.transform.DOMove(transform.position - transform.up, moveTime).OnComplete(checkNextDeadZone).OnComplete(IDZ);//Si mmuove in basso e quando ha finito insanzia la nuova DeadZone
+                        this.gameObject.transform.DOMove(transform.position - transform.up, moveTime).OnComplete(IDZ);//Si mmuove in basso e quando ha finito insanzia la nuova DeadZone
                       
                     }
                     if (Sight == LineOfSight.up)//Se sta guardando sù
                     {
-                        this.gameObject.transform.DOMove(transform.position + transform.up, moveTime).OnComplete(checkNextDeadZone).OnComplete(IDZ);//Si mmuove in alto e quando ha finito insanzia la nuova DeadZone
+                        this.gameObject.transform.DOMove(transform.position + transform.up, moveTime).OnComplete(IDZ);//Si mmuove in alto e quando ha finito insanzia la nuova DeadZone
 
                     }
                     break;
@@ -198,6 +199,7 @@ namespace NeoCompleted
                     }
                     CountDownMesh.text = CDTick.ToString(); //Aggiorna la Mesh del CoundDown
 
+                
                     if (tick == maxTicks) //Se i tick sono al massimo
                     {
                         ChangeAimingDirection(ref Sight); //Cambia la direzione della mira
@@ -206,14 +208,21 @@ namespace NeoCompleted
                         CheckStoneRaycast(ref end, ref Sight); //Controlla che nella lina di tiro non ci siano roccie e/o ostacoli da saltare
 
                         ChangeSightAnimation(Sight); //Cambia la direzione di mira
+
                         InstanceLaserDeadZone(Sight); //Instanzia una nuova Laser DeadZone
+
                         tick = 0; //e Azzera i suoi tick
                     }
+
                     if (tick != tickbeforechange)
                     {
                         InstanceLaserDeadZone(Sight);
                         //  CheckIfRaycastIs0();
-                    }        
+                    }   
+                    else
+                    {
+                        InstanceDeadZone(Sight);
+                    }
 
                     RaycastHit2D Bullet = Physics2D.Raycast(transform.position, end, 9f, blockingLayer);
                     if (Bullet.collider == null)
@@ -240,11 +249,40 @@ namespace NeoCompleted
 
 
             }
-           
+            Debug.Log("e alla fine di tutto io sono a:" + Sight);
             NeoGameManager.instance.SetState(NeoGameManager.State.Wait);
 
         }
 
+        private void switchAim(ref LineOfSight sight, ENEMY_TYPE enemyType)
+        {
+           if(enemyType== ENEMY_TYPE.Melee_Horizontal)
+            {
+                if(sight== LineOfSight.right)
+                {
+                    sight = LineOfSight.left;
+                    ChangeSightAnimation(sight);
+                }
+              else if(sight== LineOfSight.left)
+                {
+                    sight = LineOfSight.right;
+                    ChangeSightAnimation(sight);
+                }
+            }
+            if (enemyType == ENEMY_TYPE.Melee_Vertical)
+            {
+                if (sight == LineOfSight.up)
+                {
+                    sight = LineOfSight.down;
+                    ChangeSightAnimation(sight);
+                }
+                else if(sight == LineOfSight.down)
+                {
+                    sight = LineOfSight.up;
+                    ChangeSightAnimation(sight); 
+                }
+            }
+        }
 
         public void CheckStoneRaycast(ref Vector2 parEnd, ref LineOfSight parEnemyAimingWay)
         {
@@ -294,12 +332,36 @@ namespace NeoCompleted
 
                 case ENEMY_TYPE.Ranged:   InstanceDeadZone(Sight); InstanceLaserDeadZone(Sight);
                     break;
-                default:
 
+                case ENEMY_TYPE.Melee_Clockwork:
                     checkNextDeadZone();
                     InstanceNextDeadZone(Sight); break;
+
+                case ENEMY_TYPE.Melee_Horizontal:
+                    checkForPosition();
+
+                    InstanceNextDeadZone(Sight);
+                    break;
+                case ENEMY_TYPE.Melee_Vertical:
+                    checkForPosition();
+
+                    InstanceNextDeadZone(Sight);
+                    break;
             }
           
+        }
+
+        private void checkForPosition()
+        {
+            if (transform.position == (Vector3)(startPos + correttoreCoordinate))
+            {
+                switchAim(ref Sight, EnemyType);
+            }
+
+            if (transform.position == (Vector3)(finalPos + correttoreCoordinate))//Controlla che non sia arrivato al capolinea
+            {
+                switchAim(ref Sight, EnemyType);  //In tal caso deve invertire la marcia
+            }
         }
 
         private void SaveMyOldPosition()
@@ -471,13 +533,18 @@ namespace NeoCompleted
         public void InstanceDeadZone(LineOfSight parEnemyAimingWay)
         {
             // Transform _TempLaserDeadZone = Instantiate(LaserDeadzone.transform, new Vector3(this.transform.position.x + 4, this.transform.position.y), Quaternion.identity);
-
+            LineOfSight _tSight;
+            _tSight = parEnemyAimingWay;
+            Vector2 tempEnd;
+            tempEnd = GetVectorDirection(_tSight);
+            CheckStoneRaycast(ref tempEnd,ref _tSight);
+            ChangeAimingDirection(ref _tSight);
             Vector3 _TempEndPosition = new Vector3();
             for (int i = 1; i < 9; i++)
             {
                 Transform _TempDeadZone = Instantiate(Deadzone.transform, this.transform.position, Quaternion.identity, _ParentDeadZone);
                 _TempEndPosition = new Vector3();
-                switch (parEnemyAimingWay)
+                switch (_tSight)
                 {
                     case LineOfSight.down:
                         _TempEndPosition = _TempDeadZone.position;
@@ -618,13 +685,14 @@ namespace NeoCompleted
 
             }
         }
+      
 
         #region NeoEnemyTool
         [HideInInspector] public bool isLinear;
       
         [HideInInspector] public bool isClockwork;
         [HideInInspector] public bool isRanged;
-
+        [HideInInspector] Vector2 correttoreCoordinate = new Vector2(0.5f,0.15f);
         [ExecuteInEditMode]
          void OnValidate()
         {
@@ -633,6 +701,13 @@ namespace NeoCompleted
                 isLinear = true;              
                 isRanged = false;
                 isClockwork = false;
+                PointA.transform.position = startPos+correttoreCoordinate;
+                PointB.transform.position = finalPos+correttoreCoordinate;
+            }
+            else
+            {
+                PointA = null;
+                PointB = null;
             }
            
             if (EnemyType == ENEMY_TYPE.Melee_Clockwork)
@@ -649,6 +724,8 @@ namespace NeoCompleted
                 isClockwork = false;
 
             }
+
+          
         } 
 
         #endregion

@@ -37,14 +37,19 @@ namespace NeoCompleted
                     //We now raycast with this information. If we have hit something we can process it.
                     RaycastHit2D hitInformation = Physics2D.Raycast(touchPosWorld2D, Camera.main.transform.forward);
 
-                    if (hitInformation.collider.tag == "Player")
+                    //  Debug.Log(hitInformation.collider.gameObject.name + " , " + hitInformation.collider.gameObject.tag);
+                    if (hitInformation.collider != null)
                     {
+                        if (hitInformation.collider.tag == "Player")
+                        {
 
-                        //We should have hit something with a 2D Physics collider!
-                        GameObject touchedObject = hitInformation.transform.gameObject;
-                        //touchedObject should be the object someone touched.
-                        GiveMovement(touchedObject);
-                NeoGameManager.instance.SetState(NeoGameManager.State.MovePlayer);
+                            //We should have hit something with a 2D Physics collider!
+                            GameObject touchedObject = hitInformation.transform.gameObject;
+                            //touchedObject should be the object someone touched.
+                            GiveMovement(touchedObject);
+                            NeoGameManager.instance.SetState(NeoGameManager.State.MovePlayer);
+                        }
+
                     }
                 }
             }

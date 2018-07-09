@@ -49,9 +49,17 @@ namespace NeoCompleted
 
         private void Start()
         {
-            foreach(NeoEnemy e in enemies)
+            foreach (NeoEnemy e in enemies)
             {
                 e.ChangeSightAnimation(e.Sight);
+                if (e.EnemyType == NeoEnemy.ENEMY_TYPE.Ranged)
+                {
+                    e.InstanceLaserDeadZone(e.Sight);
+                }
+                else
+                {
+                    e.InstanceNextDeadZone(e.Sight);
+                }
             }
         }
         // Update is called once per frame
