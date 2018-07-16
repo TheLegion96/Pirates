@@ -15,10 +15,12 @@ public class TestColliderUI : MonoBehaviour {
 	}
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if(collision.gameObject.tag=="Stone")
         this.gameObject.SetActive(false);
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        this.gameObject.SetActive(false);
+        if (collision.gameObject.tag == "Stone")
+            this.gameObject.SetActive(false);
     }
 }

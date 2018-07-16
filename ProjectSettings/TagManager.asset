@@ -9,6 +9,7 @@ TagManager:
   - DeadZone
   - LaserDeadZone
   - Stone
+  - Ice
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - Level
   - Player
   - Enemy
-  - 
+  - Trap
   - 
   - 
   - 

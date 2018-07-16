@@ -12,19 +12,32 @@ namespace NeoCompleted
 
 
         Vector3 touchPosWorld;
-
+     public static PlayerMobileMovement instance;
         //Change me to change the touch phase used.
         TouchPhase touchPhase = TouchPhase.Ended;
+      public bool playerOnIce;
+        Vector2 correttoreCoordinate = new Vector2(0.5f, 0.15f);
 
         // Use this for initialization
         void Start()
         {
-
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else if (instance != this)
+            {
+                Destroy(gameObject);
+            }
+            playerOnIce = false;
         }
         // Update is called once per frame
         bool touched = false;
         void Update()
         {
+
+            Debug.Log(PlayerMobileMovement.instance.gameObject.transform.position);
+           
             if (NeoGameManager.instance.state == NeoGameManager.State.Wait)
             {
                 if (Input.touchCount > 0 && Input.GetTouch(0).phase == touchPhase)
@@ -47,7 +60,9 @@ namespace NeoCompleted
                             GameObject touchedObject = hitInformation.transform.gameObject;
                             //touchedObject should be the object someone touched.
                             GiveMovement(touchedObject);
+                            NeoGameManager.instance.giveDirection(direction);
                             NeoGameManager.instance.SetState(NeoGameManager.State.MovePlayer);
+                            
                         }
 
                     }
@@ -55,10 +70,11 @@ namespace NeoCompleted
             }
         }
 
+        Vector2 direction;
         public float moveTime = 0.5f;
         public void GiveMovement(GameObject _direction)
         {
-
+            IsMoving();
             switch (_direction.name)
             {
                 case "Player": //Do Pause
@@ -67,20 +83,46 @@ namespace NeoCompleted
                     EnableButton();
                     break;
                 case "Player_MoveUp"://Do Up
-                    this.gameObject.transform.DOMove(transform.position + transform.up, moveTime).OnStart(DisableButton).OnComplete(EnableButton);
+                    direction = transform.up;
+                    
+                    this.gameObject.transform.DOMove(transform.position + transform.up, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
+                    
                     break;
                 case "Player_MoveDown": //Do Down
-                    this.gameObject.transform.DOMove(transform.position - transform.up, moveTime).OnStart(DisableButton).OnComplete(EnableButton);
+                    direction = -transform.up;
+                    this.gameObject.transform.DOMove(transform.position - transform.up, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
                     break;
                 case "Player_MoveRight"://Do Right
-                    this.gameObject.transform.DOMove(transform.position + transform.right, moveTime).OnStart(DisableButton).OnComplete(EnableButton);
+                    direction = transform.right;
+                    this.gameObject.transform.DOMove(transform.position + transform.right, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
                     break;
                 case "Player_MoveLeft"://Do Left
-                    this.gameObject.transform.DOMove(transform.position - transform.right, moveTime).OnStart(DisableButton).OnComplete(EnableButton);
+                    direction = -transform.right;
+                    this.gameObject.transform.DOMove(transform.position - transform.right, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
                     break;
                 default: break;
             }
-
+            IsMoving();
+        }
+        public void GiveMovement(string _direction)
+        {
+            IsMoving();
+            switch(_direction)
+            {
+                case "UP":
+                    this.gameObject.transform.DOMove(transform.position + transform.up, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
+                    break;
+                case "DOWN":
+                    this.gameObject.transform.DOMove(transform.position - transform.up, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
+                    break;
+                case "LEFT":
+                    this.gameObject.transform.DOMove(transform.position - transform.right, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
+                    break;
+                case "RIGHT":
+                    this.gameObject.transform.DOMove(transform.position + transform.right, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
+                    break;
+            }
+            IsMoving();
         }
 
         public void DisableButton()
@@ -91,12 +133,78 @@ namespace NeoCompleted
                 transform.GetChild(i).gameObject.SetActive(false);
             }
         }
+     public int counter = 0;
+        public void RoundAndEnable()
+        {
+           
+            Vector3 RoundedPosition;
+            RoundedPosition = Vector3.zero;
+            if (direction == Vector2.up)
+            {
+                RoundedPosition.x = Mathf.Round(transform.position.x)-0.5f;
+                RoundedPosition.y = Mathf.Round(transform.position.y)+0.15f;
+            }
+            if (direction == -Vector2.up)
+            {
+                RoundedPosition.x = Mathf.Round(transform.position.x) - 0.5f;
+                RoundedPosition.y = Mathf.Round(transform.position.y) +0.15f;
+            }
+            if (direction == Vector2.right)
+            {
+                RoundedPosition.x = Mathf.Round(transform.position.x)+0.5f;
+                RoundedPosition.y = Mathf.Round(transform.position.y) +0.15f;
+            }
+            if (direction == -Vector2.right)
+            {
+                RoundedPosition.x = Mathf.Round(transform.position.x) -0.5f;
+                RoundedPosition.y = Mathf.Round(transform.position.y) + 0.15f;
+            }
+            if(counter==1)
+            {
+                if(direction==Vector2.right)
+                {
+                    RoundedPosition.x -= 1;
+                }
+                if (direction == -Vector2.right)
+                {
+                    RoundedPosition.x += 1;
+                }
+                counter = 0;
+            }
+            else { counter++; }
+
+            this.gameObject.transform.position = RoundedPosition;
+
+            EnableButton();
+        }
         public void EnableButton()
         {
             for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(true);
             }
+        }
+
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.tag == "Ice")
+            {
+                playerOnIce = true;
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.gameObject.tag == "Ice")
+            {
+                playerOnIce = false;
+            }
+        }
+        public bool isMoving=false;
+        public void IsMoving()
+        {
+            isMoving = !isMoving;
         }
     }
 }

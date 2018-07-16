@@ -249,7 +249,7 @@ namespace NeoCompleted
 
 
             }
-            Debug.Log("e alla fine di tutto io sono a:" + Sight);
+     
             NeoGameManager.instance.SetState(NeoGameManager.State.Wait);
 
         }

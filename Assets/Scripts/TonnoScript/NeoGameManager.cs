@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace NeoCompleted
 {
@@ -30,6 +31,7 @@ namespace NeoCompleted
         public List<NeoEnemy> enemies;
         [HideInInspector] public bool playersTurn = true;
         private bool enemiesMoving;
+        private Vector2 playerDirection;
         //-----------------------------CODE----------------------------------------------------------------
 
 
@@ -49,6 +51,7 @@ namespace NeoCompleted
 
         private void Start()
         {
+
             foreach (NeoEnemy e in enemies)
             {
                 e.ChangeSightAnimation(e.Sight);
@@ -65,10 +68,12 @@ namespace NeoCompleted
         // Update is called once per frame
         void Update()
         {
-            Debug.Log(state);
-            if(state==State.Wait)
+
+            if (state == State.Wait)
             {
                 playersTurn = true;
+                //playerDirection = Vector2.zero;
+                StartCoroutine(AnalyzeMovement());
             }
 
             if (state == State.MovePlayer)
@@ -77,11 +82,48 @@ namespace NeoCompleted
                 SetState(State.MoveEnemy);
             }
 
-            if (state== State.MoveEnemy)
+            if (state == State.MoveEnemy)
             {
                 destroyAllLaserAndDeadZone();
                 StartCoroutine(MoveEnemies());
             }
+        }
+
+        IEnumerator AnalyzeMovement()
+        {
+            //do
+            //{
+            //    Debug.Log(playerDirection);
+            //} while (playerDirection==Vector2.zero);
+
+            if (PlayerMobileMovement.instance.playerOnIce == true)
+            {
+
+
+                if (playerDirection == (Vector2)transform.up)
+                {
+                    PlayerMobileMovement.instance.GiveMovement("UP");
+                }
+                if (playerDirection == -(Vector2)transform.up)
+                {
+
+                    PlayerMobileMovement.instance.GiveMovement("DOWN");
+                }
+
+                if (playerDirection == (Vector2)transform.right)
+                {
+                    PlayerMobileMovement.instance.GiveMovement("RIGHT");
+                }
+                if (playerDirection == -(Vector2)transform.right)
+                {
+                    PlayerMobileMovement.instance.GiveMovement("LEFT");
+                }
+
+            }
+
+
+
+        yield return null;
         }
 
         public void SetState(State _state)
@@ -105,7 +147,14 @@ namespace NeoCompleted
             
                 yield return new WaitForSeconds(enemies[i].moveTime / 100);
             }
+            SetState(State.Wait);
             yield return null;
+        }
+    
+        public void giveDirection(Vector2 _dir)
+        {
+
+            playerDirection = _dir;
         }
 
         void destroyAllLaserAndDeadZone()
