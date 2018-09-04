@@ -40,10 +40,10 @@ namespace NeoCompleted
            
             if (NeoGameManager.instance.state == NeoGameManager.State.Wait)
             {
-                if (Input.touchCount > 0 && Input.GetTouch(0).phase == touchPhase)
+                if (Input.GetMouseButtonDown(0))
                 {
                     //We transform the touch position into word space from screen space and store it.
-                    touchPosWorld = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+                    touchPosWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
                     Vector2 touchPosWorld2D = new Vector2(touchPosWorld.x, touchPosWorld.y);
 
