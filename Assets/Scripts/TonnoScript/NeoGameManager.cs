@@ -99,7 +99,7 @@ namespace NeoCompleted
             if (PlayerMobileMovement.instance.playerOnIce == true)
             {
 
-
+                /*
                 if (playerDirection == (Vector2)transform.up)
                 {
                     PlayerMobileMovement.instance.GiveMovement("UP");
@@ -118,7 +118,7 @@ namespace NeoCompleted
                 {
                     PlayerMobileMovement.instance.GiveMovement("LEFT");
                 }
-
+                */
             }
 
 

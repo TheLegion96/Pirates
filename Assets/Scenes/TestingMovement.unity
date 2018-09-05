@@ -1159,6 +1159,9 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
+  iceMask:
+    serializedVersion: 2
+    m_Bits: 8192
   playerOnIce: 0
   moveTime: 1
   counter: 0
@@ -3325,7 +3328,7 @@ GameObject:
   - component: {fileID: 932596074}
   - component: {fileID: 932596076}
   - component: {fileID: 932596075}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: IT_4
   m_TagString: Ice
   m_Icon: {fileID: 0}
@@ -5064,6 +5067,38 @@ Prefab:
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1625608648094000, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
+      propertyPath: m_Name
+      value: UP
+      objectReference: {fileID: 0}
+    - target: {fileID: 1230076683463488, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
+      propertyPath: m_Name
+      value: DOWN
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007212710326334, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
+      propertyPath: m_Name
+      value: RIGHT
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169536786776228, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
+      propertyPath: m_Name
+      value: LEFT
+      objectReference: {fileID: 0}
+    - target: {fileID: 4163168137967300, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4876469950576438, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4033716729786534, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 4885044989423012, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.17
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 5046652, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
     - {fileID: 114651655761738478, guid: 28b53fc28d3a140c392f0e2d919f9de1, type: 2}
@@ -5595,7 +5630,7 @@ GameObject:
   - component: {fileID: 1685930605}
   - component: {fileID: 1685930607}
   - component: {fileID: 1685930606}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: IT_5
   m_TagString: Ice
   m_Icon: {fileID: 0}
@@ -7518,7 +7553,7 @@ GameObject:
   - component: {fileID: 1962692196}
   - component: {fileID: 1962692198}
   - component: {fileID: 1962692197}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: IT_1
   m_TagString: Ice
   m_Icon: {fileID: 0}
@@ -7794,7 +7829,7 @@ GameObject:
   - component: {fileID: 2057047423}
   - component: {fileID: 2057047425}
   - component: {fileID: 2057047424}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: IT_2
   m_TagString: Ice
   m_Icon: {fileID: 0}
@@ -7894,7 +7929,7 @@ GameObject:
   - component: {fileID: 2061440464}
   - component: {fileID: 2061440466}
   - component: {fileID: 2061440465}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: IT_3
   m_TagString: Ice
   m_Icon: {fileID: 0}

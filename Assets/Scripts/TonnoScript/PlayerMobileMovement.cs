@@ -10,12 +10,12 @@ namespace NeoCompleted
     public class PlayerMobileMovement : SerializedMonoBehaviour
     {
 
-
+        public LayerMask iceMask;
         Vector3 touchPosWorld;
-     public static PlayerMobileMovement instance;
+        public static PlayerMobileMovement instance;
         //Change me to change the touch phase used.
         TouchPhase touchPhase = TouchPhase.Ended;
-      public bool playerOnIce;
+        public bool playerOnIce;
         Vector2 correttoreCoordinate = new Vector2(0.5f, 0.15f);
 
         // Use this for initialization
@@ -37,7 +37,7 @@ namespace NeoCompleted
         {
 
             Debug.Log(PlayerMobileMovement.instance.gameObject.transform.position);
-           
+
             if (NeoGameManager.instance.state == NeoGameManager.State.Wait)
             {
                 if (Input.GetMouseButtonDown(0))
@@ -55,16 +55,25 @@ namespace NeoCompleted
                     {
                         if (hitInformation.collider.tag == "Player")
                         {
-
                             //We should have hit something with a 2D Physics collider!
                             GameObject touchedObject = hitInformation.transform.gameObject;
                             //touchedObject should be the object someone touched.
-                            GiveMovement(touchedObject);
+
+                            int amount = 1;
+
+                            Vector3 dir = (Vector3)GetDirection(touchedObject.name);
+                            Vector3 position = touchedObject.transform.position + -Vector3.forward;
+                            position -= dir;
+
+                            while (Physics2D.Raycast(position + dir * amount, Vector2.zero, 50, iceMask))
+                            {
+                                amount++;
+                            }
+                            
+                            GiveMovement(dir, amount);
                             NeoGameManager.instance.giveDirection(direction);
                             NeoGameManager.instance.SetState(NeoGameManager.State.MovePlayer);
-                            
                         }
-
                     }
                 }
             }
@@ -72,109 +81,85 @@ namespace NeoCompleted
 
         Vector2 direction;
         public float moveTime = 0.5f;
-        public void GiveMovement(GameObject _direction)
+
+        public Vector2 GetDirection(string direction)
         {
-            IsMoving();
-            switch (_direction.name)
-            {
-                case "Player": //Do Pause
-                    DisableButton();
-                    
-                    EnableButton();
-                    break;
-                case "Player_MoveUp"://Do Up
-                    direction = transform.up;
-                    
-                    this.gameObject.transform.DOMove(transform.position + transform.up, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
-                    
-                    break;
-                case "Player_MoveDown": //Do Down
-                    direction = -transform.up;
-                    this.gameObject.transform.DOMove(transform.position - transform.up, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
-                    break;
-                case "Player_MoveRight"://Do Right
-                    direction = transform.right;
-                    this.gameObject.transform.DOMove(transform.position + transform.right, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
-                    break;
-                case "Player_MoveLeft"://Do Left
-                    direction = -transform.right;
-                    this.gameObject.transform.DOMove(transform.position - transform.right, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
-                    break;
-                default: break;
-            }
-            IsMoving();
-        }
-        public void GiveMovement(string _direction)
-        {
-            IsMoving();
-            switch(_direction)
+            switch (direction)
             {
                 case "UP":
-                    this.gameObject.transform.DOMove(transform.position + transform.up, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
-                    break;
+                    return Vector2.up;
                 case "DOWN":
-                    this.gameObject.transform.DOMove(transform.position - transform.up, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
-                    break;
+                    return Vector2.down;
                 case "LEFT":
-                    this.gameObject.transform.DOMove(transform.position - transform.right, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
-                    break;
+                    return Vector2.left;
                 case "RIGHT":
-                    this.gameObject.transform.DOMove(transform.position + transform.right, moveTime).OnStart(DisableButton).OnComplete(RoundAndEnable);
-                    break;
+                    return Vector2.right;
             }
+
+            return Vector2.zero;
+        }
+
+        public void GiveMovement(Vector2 direction, int amount)
+        {
+            IsMoving();
+
+            this.gameObject.transform.DOMove(transform.position + (Vector3)direction * amount, moveTime * amount).
+                OnStart(DisableButton).OnComplete(RoundAndEnable);
+            
             IsMoving();
         }
 
         public void DisableButton()
         {
-
             for (int i = 0; i < transform.childCount; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(false);
             }
         }
-     public int counter = 0;
+
+        public int counter = 0;
+
         public void RoundAndEnable()
         {
-           
-            Vector3 RoundedPosition;
-            RoundedPosition = Vector3.zero;
-            if (direction == Vector2.up)
-            {
-                RoundedPosition.x = Mathf.Round(transform.position.x)-0.5f;
-                RoundedPosition.y = Mathf.Round(transform.position.y)+0.15f;
-            }
-            if (direction == -Vector2.up)
-            {
-                RoundedPosition.x = Mathf.Round(transform.position.x) - 0.5f;
-                RoundedPosition.y = Mathf.Round(transform.position.y) +0.15f;
-            }
-            if (direction == Vector2.right)
-            {
-                RoundedPosition.x = Mathf.Round(transform.position.x)+0.5f;
-                RoundedPosition.y = Mathf.Round(transform.position.y) +0.15f;
-            }
-            if (direction == -Vector2.right)
-            {
-                RoundedPosition.x = Mathf.Round(transform.position.x) -0.5f;
-                RoundedPosition.y = Mathf.Round(transform.position.y) + 0.15f;
-            }
-            if(counter==1)
-            {
-                if(direction==Vector2.right)
-                {
-                    RoundedPosition.x -= 1;
-                }
-                if (direction == -Vector2.right)
-                {
-                    RoundedPosition.x += 1;
-                }
-                counter = 0;
-            }
-            else { counter++; }
+            /*
+             Vector3 RoundedPosition;
+             RoundedPosition = Vector3.zero;
+             if (direction == Vector2.up)
+             {
+                 RoundedPosition.x = Mathf.Round(transform.position.x)-0.5f;
+                 RoundedPosition.y = Mathf.Round(transform.position.y)+0.15f;
+             }
+             if (direction == -Vector2.up)
+             {
+                 RoundedPosition.x = Mathf.Round(transform.position.x) - 0.5f;
+                 RoundedPosition.y = Mathf.Round(transform.position.y) +0.15f;
+             }
+             if (direction == Vector2.right)
+             {
+                 RoundedPosition.x = Mathf.Round(transform.position.x)+0.5f;
+                 RoundedPosition.y = Mathf.Round(transform.position.y) +0.15f;
+             }
+             if (direction == -Vector2.right)
+             {
+                 RoundedPosition.x = Mathf.Round(transform.position.x) -0.5f;
+                 RoundedPosition.y = Mathf.Round(transform.position.y) + 0.15f;
+             }
+             if(counter==1)
+             {
+                 if(direction==Vector2.right)
+                 {
+                     RoundedPosition.x -= 1;
+                 }
+                 if (direction == -Vector2.right)
+                 {
+                     RoundedPosition.x += 1;
+                 }
+                 counter = 0;
+             }
+             else { counter++; }
 
-            this.gameObject.transform.position = RoundedPosition;
-
+             this.gameObject.transform.position = RoundedPosition;
+             */
             EnableButton();
         }
         public void EnableButton()
@@ -201,7 +186,7 @@ namespace NeoCompleted
                 playerOnIce = false;
             }
         }
-        public bool isMoving=false;
+        public bool isMoving = false;
         public void IsMoving()
         {
             isMoving = !isMoving;
