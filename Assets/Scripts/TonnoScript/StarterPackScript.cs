@@ -1,19 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 [ExecuteInEditMode]
-[HideMonoScript]
-public class TestLevelEditor : MonoBehaviour {
+public class test : MonoBehaviour {
 
-   
 	// Use this for initialization
 	void Start () {
-      
-            transform.DetachChildren();
+        transform.DetachChildren();
         DestroyImmediate(this.gameObject);
 	}
 	
-
+	// Update is called once per frame
+	void Update () {
+		
+	}
 }

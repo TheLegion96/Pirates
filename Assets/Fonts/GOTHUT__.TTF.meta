@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: c28103b2e753cda4aa8cd159b79a9ec7
+timeCreated: 1501234695
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 300
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Gothic Ultra Trendy
+  fontNames:
+  - Gothic Ultra Trendy
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
