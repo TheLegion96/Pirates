@@ -8,4 +8,43 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TestingMovement.unity
     guid: ed4a4a13d4731114993a004da4dfc14e
+  - enabled: 1
+    path: Assets/_Scenes/MainMenu_simone.unity
+    guid: 15b1ceaf1f026a24087d0d02e4643b17
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/0_TUTORIAL - Scene 1.unity
+    guid: ef1a2b1ec8d42f04b9f1c724cbccc430
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/0_TUTORIAL - Scene 2.unity
+    guid: a880971c6b2def545974c7427046cd40
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/0_TUTORIAL - Scene 3.unity
+    guid: 1c5dfe2aa2a5b5540bb11ed037df9992
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/Livello1_Stanza1.unity
+    guid: 7716dc4047bd5c14ca68d1eff48b4cff
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/Livello1_Stanza2.unity
+    guid: 3f783d8bb78415b4fb21b289e5812dd2
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/Livello1_Stanza3.unity
+    guid: 39572b1f98b27794f852a91fdf6d73af
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/Livello2_Stanza1.unity
+    guid: 7699714ac26f1d7489d8b7996317c776
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/Livello2_Stanza2.unity
+    guid: 2d45f57a637fae641a03651bfe29bd08
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/Livello2_Stanza3.unity
+    guid: e5f24f2f655095b42be9dd4d83b936dd
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/Livello3_Stanza1.unity
+    guid: e2eda40c4d4b110459bd9711019dadd1
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/Livello3_Stanza2.unity
+    guid: 1cf505663c459ab40aee6d0d6be088e4
+  - enabled: 1
+    path: Assets/_Scenes/LevelDesign/Livello3_Stanza3.unity
+    guid: 0693ea800d185224cbad66123098368c
   m_configObjects: {}

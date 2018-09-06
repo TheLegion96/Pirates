@@ -88,7 +88,7 @@ Animator:
   m_GameObject: {fileID: 146652}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: ed88edb0ae145440684f0bf998629c0c, type: 2}
+  m_Controller: {fileID: 22100000, guid: 97a9b2f3aef4a6a458aa82c8525d0fbc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -126,11 +126,11 @@ MonoBehaviour:
   drinkSound1: {fileID: 8300000, guid: b6b608537288246c9a464915db27bf52, type: 3}
   drinkSound2: {fileID: 8300000, guid: bcb9dda73ee914d3e8f252895f73f461, type: 3}
   gameOverSound: {fileID: 8300000, guid: b49247e762cdfed40914e9fe7f3fbd7e, type: 3}
-  maleCharacterWithSwordAnimator: {fileID: 22100000, guid: 832a069a2b87e4b42857e6945acf8a1d,
+  maleCharacterWithSwordAnimator: {fileID: 22100000, guid: 97a9b2f3aef4a6a458aa82c8525d0fbc,
     type: 2}
   maleCharacterWithoutSwordAnimator: {fileID: 22100000, guid: 97a9b2f3aef4a6a458aa82c8525d0fbc,
     type: 2}
-  femaleCharacterWithSwordAnimator: {fileID: 22100000, guid: 0d9e78ad7739e93418f7de99265ad2d2,
+  femaleCharacterWithSwordAnimator: {fileID: 22100000, guid: 625c617a558266a49bc686bcfe841bfc,
     type: 2}
   femaleCharacterWithoutSwordAnimator: {fileID: 22100000, guid: 625c617a558266a49bc686bcfe841bfc,
     type: 2}

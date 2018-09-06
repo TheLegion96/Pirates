@@ -136,7 +136,7 @@ namespace Completed
                 int vertical = 0;       //Used to store the vertical move direction.
 
                 //Check if we are running either in the Unity editor or in a standalone build.
-#if UNITY_STANDALONE || UNITY_WEBPLAYER
+//#if UNITY_STANDALONE || UNITY_WEBPLAYER
 
                 //Get input from the input manager, round it to an integer and store in horizontal to set x axis move direction
                 horizontal = (int)(Input.GetAxisRaw("Horizontal"));
@@ -155,7 +155,7 @@ namespace Completed
                     vertical = 0;
                 }
                 //Check if we are running on iOS, Android, Windows Phone 8 or Unity iPhone
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+//#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
 			
 			//Check if Input has registered more than zero touches
 			if (Input.touchCount > 0)
@@ -195,7 +195,7 @@ namespace Completed
 				}
 			}
 			
-#endif //End of mobile platform dependendent compilation section started above with #elif
+//#endif //End of mobile platform dependendent compilation section started above with #elif
                 //Check if we have a non-zero value for horizontal or vertical
                 if (horizontal != 0 || vertical != 0 || Input.GetKeyDown(turnJumper))
                 {

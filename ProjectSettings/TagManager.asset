@@ -10,6 +10,10 @@ TagManager:
   - LaserDeadZone
   - Stone
   - Ice
+  - Exit
+  - Tentacle
+  - Soda
+  - MedusaFloor
   layers:
   - Default
   - TransparentFX
@@ -25,8 +29,8 @@ TagManager:
   - Enemy
   - Trap
   - Ice
-  - 
-  - 
+  - BlockingLayer
+  - ExitLayer
   - 
   - 
   - 
@@ -49,4 +53,13 @@ TagManager:
     locked: 0
   - name: Level
     uniqueID: 2438068943
+    locked: 0
+  - name: Floor
+    uniqueID: 1952054237
+    locked: 0
+  - name: Unit
+    uniqueID: 4161725061
+    locked: 0
+  - name: UI
+    uniqueID: 3205412823
     locked: 0
